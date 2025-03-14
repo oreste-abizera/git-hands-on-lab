@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GitHub Practice - Direct Push & Pull Requests</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: #f6f8fa;
+        color: #24292e;
+        line-height: 1.6;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #fff;
+        border-radius: 6px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 30px;
+        border-bottom: 1px solid #e1e4e8;
+        padding-bottom: 20px;
+      }
+
+      h1 {
+        color: #24292e;
+        font-size: 28px;
+        margin-bottom: 10px;
+      }
+
+      h2 {
+        color: #24292e;
+        font-size: 22px;
+        margin: 20px 0 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e1e4e8;
+      }
+
+      .description {
+        font-size: 16px;
+        color: #586069;
+        margin-bottom: 20px;
+      }
+
+      .practice-section {
+        margin-bottom: 30px;
+        padding: 20px;
+        border-radius: 6px;
+      }
+
+      .task1 {
+        background-color: #f1f8ff;
+        border-left: 4px solid #0366d6;
+      }
+
+      .task2 {
+        background-color: #f8f9fa;
+        border-left: 4px solid #6f42c1;
+      }
+
+      .step {
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 3px;
+        background-color: rgba(255, 255, 255, 0.7);
+      }
+
+      .step-number {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        text-align: center;
+        border-radius: 50%;
+        margin-right: 10px;
+        color: white;
+      }
+
+      .task1 .step-number {
+        background-color: #0366d6;
+      }
+
+      .task2 .step-number {
+        background-color: #6f42c1;
+      }
+
+      .step-title {
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: inline-block;
+      }
+
+      .code-block {
+        background-color: #f6f8fa;
+        padding: 15px;
+        border-radius: 6px;
+        font-family: monospace;
+        margin: 10px 0;
+        overflow-x: auto;
+      }
+
+      .task2 .code-block {
+        background-color: #f8f0fc;
+      }
+
+      .list-container {
+        background-color: #f6f8fa;
+        padding: 15px;
+        border-radius: 6px;
+        margin-top: 15px;
+      }
+
+      .list-example {
+        background-color: white;
+        padding: 15px;
+        border: 1px solid #e1e4e8;
+        border-radius: 6px;
+      }
+
+      .warning {
+        background-color: #fff5b1;
+        border-left: 4px solid #f9c513;
+        padding: 10px;
+        margin: 15px 0;
+        border-radius: 3px;
+      }
+
+      .tips {
+        background-color: #e6ffed;
+        border-left: 4px solid #28a745;
+        padding: 10px;
+        margin: 15px 0;
+        border-radius: 3px;
+      }
+
+      .pr-info {
+        background-color: #f1f8ff;
+        border: 1px solid #c8e1ff;
+        border-radius: 6px;
+        padding: 15px;
+        margin: 15px 0;
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #e1e4e8;
+        color: #586069;
+        font-size: 14px;
+      }
+
+      .task-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .task-icon {
+        font-size: 24px;
+        margin-right: 10px;
+      }
+
+      .task1 .task-icon::after {
+        content: "⭐";
+      }
+
+      .task2 .task-icon::after {
+        content: "🔄";
+      }
+
+      .file-preview {
+        border: 1px solid #e1e4e8;
+        border-radius: 6px;
+        margin: 10px 0;
+        padding: 10px;
+      }
+
+      .file-name {
+        background-color: #f6f8fa;
+        padding: 5px 10px;
+        font-family: monospace;
+        border-radius: 3px;
+        display: inline-block;
+        margin-bottom: 10px;
+      }
+
+      .repo-link {
+        background-color: #2ea44f;
+        color: white;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        display: inline-block;
+        margin-top: 10px;
+        font-weight: bold;
+      }
+
+      .repo-link:hover {
+        background-color: #2c974b;
+      }
+
+      .table-container {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>GitHub Hands-On Practice</h1>
+        <p class="description">
+          Learn essential Git workflows by contributing to this repository
+        </p>
+      </header>
+
+      <div class="practice-section task1">
+        <div class="task-header">
+          <div class="task-icon"></div>
+          <h2>Task 1: Direct Push to Main - Attendance List</h2>
+        </div>
+        <p>
+          In this first task, you'll add your name directly to the main branch's
+          attendance list.
+        </p>
+
+        <div class="step">
+          <span class="step-number">1</span>
+          <span class="step-title">Clone the repository</span>
+          <p>Clone this repository to your local machine:</p>
+          <div class="code-block">
+            git clone https://github.com/oreste-abizera/git-hands-on-lab.git<br />
+            cd git-hands-on-lab
+          </div>
+        </div>
+
+        <div class="step">
+          <span class="step-number">2</span>
+          <span class="step-title">Get the latest changes</span>
+          <p>Pull the latest changes from the main branch:</p>
+          <div class="code-block">git pull origin main</div>
+        </div>
+
+        <div class="step">
+          <span class="step-number">3</span>
+          <span class="step-title">Edit the attendance.html file</span>
+          <p>
+            Open the attendance.html file in your preferred text editor and add
+            your name to the list:
+          </p>
+          <div class="file-preview">
+            <span class="file-name">attendance.html</span>
+            <div class="list-example">
+              &lt;li class="list-item"&gt;Your Name &lt;span
+              class="timestamp"&gt;(Added: Today's Date)&lt;/span&gt;&lt;/li&gt;
+            </div>
+          </div>
+          <div class="tips">
+            <strong>Tip:</strong> Add your line right after the comment that
+            says "Add your name below this line"
+          </div>
+        </div>
+
+        <div class="step">
+          <span class="step-number">4</span>
+          <span class="step-title">Commit your changes</span>
+          <div class="code-block">
+            git add attendance.html<br />
+            git commit -m "Add [Your Name] to attendance list"
+          </div>
+        </div>
+
+        <div class="step">
+          <span class="step-number">5</span>
+          <span class="step-title">Push directly to main</span>
+          <div class="code-block">git push origin main</div>
+          <div class="warning">
+            <strong>Note:</strong> In this exercise, we're pushing directly to
+            main for simplicity. In real-world projects, this practice is often
+            restricted to maintain code quality.
+          </div>
+        </div>
+
+        <div class="step">
+          <span class="step-number">6</span>
+          <span class="step-title">Verify your changes</span>
+          <p>
+            Check the repository on GitHub to confirm your name appears in the
+            attendance list.
+          </p>
+        </div>
+      </div>
+
+      <div class="practice-section task2">
+        <div class="task-header">
+          <div class="task-icon"></div>
+          <h2>Task 2: Pull Request Workflow - Email List</h2>
+        </div>
+        <p>
+          For this second task, you'll add your email through a pull request
+          workflow to practice code review.
+        </p>
+
+        <div class="step">
+          <span class="step-number">1</span>
+          <span class="step-title">Create a new branch</span>
+          <p>Create and switch to a new branch for your changes:</p>
+          <div class="code-block">git checkout -b add-email-yourname</div>
+          <div class="tips">
+            <strong>Tip:</strong> Replace "yourname" with your actual name,
+            using lowercase and hyphens instead of spaces
+          </div>
+        </div>
+
+        <div class="step">
+          <span class="step-number">2</span>
+          <span class="step-title">Edit the emails.html file</span>
+          <p>
+            Open the emails.html file and add your information to the table:
+          </p>
+          <div class="file-preview">
+            <span class="file-name">emails.html</span>
+            <div class="list-example">
+              &lt;tr&gt; &lt;td&gt;Your Name&lt;/td&gt;
+              &lt;td&gt;your.email@example.com&lt;/td&gt;
+              &lt;td&gt;your-github-username&lt;/td&gt; &lt;/tr&gt;
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <span class="step-number">3</span>
+          <span class="step-title">Commit your changes</span>
+          <div class="code-block">
+            git add emails.html<br />
+            git commit -m "Add [Your Name]'s email to directory"
+          </div>
+        </div>
+
+        <div class="step">
+          <span class="step-number">4</span>
+          <span class="step-title">Push your branch</span>
+          <div class="code-block">git push origin add-email-yourname</div>
+        </div>
+
+        <div class="step">
+          <span class="step-number">5</span>
+          <span class="step-title">Create a Pull Request</span>
+          <ol>
+            <li>Go to the repository on GitHub</li>
+            <li>Click on "Pull Requests" tab</li>
+            <li>Click the "New pull request" button</li>
+            <li>Select your branch in the "compare" dropdown</li>
+            <li>Click "Create pull request"</li>
+            <li>Add a descriptive title and comment</li>
+            <li>Submit the pull request</li>
+          </ol>
+          <div class="pr-info">
+            <strong>Good PR title examples:</strong>
+            <ul>
+              <li>"Add Jane Doe's email to directory"</li>
+              <li>"Update email directory with my contact info"</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="step">
+          <span class="step-number">6</span>
+          <span class="step-title">Review a classmate's Pull Request</span>
+          <p>After submitting your PR, practice the code review process:</p>
+          <ol>
+            <li>Find an open pull request from a classmate</li>
+            <li>Click on the "Files changed" tab to see their changes</li>
+            <li>Review the code for any issues or improvements</li>
+            <li>Add comments by clicking the "+" button on specific lines</li>
+            <li>Submit your review (approve, request changes, or comment)</li>
+          </ol>
+          <div class="tips">
+            <strong>Review checklist:</strong>
+            <ul>
+              <li>Is the information correctly formatted?</li>
+              <li>Is the email in a valid format?</li>
+              <li>Did they add their information in the right place?</li>
+              <li>Did they accidentally modify or remove existing content?</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <h2>Repository Files</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>File</th>
+              <th>Description</th>
+              <th>Task</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="index.html">index.html</a></td>
+              <td>Instructions page (this file)</td>
+              <td>Reference only</td>
+            </tr>
+            <tr>
+              <td><a href="attendance.html">attendance.html</a></td>
+              <td>Class attendance list</td>
+              <td>Task 1 - Direct push</td>
+            </tr>
+            <tr>
+              <td><a href="emails.html">emails.html</a></td>
+              <td>Email directory</td>
+              <td>Task 2 - Pull request</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="footer">
+        <p>GitHub Practice Assignment - Learning collaborative Git workflows</p>
+        <p>Created for hands-on teaching</p>
+      </div>
+    </div>
+  </body>
+</html>
